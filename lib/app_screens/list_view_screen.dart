@@ -18,7 +18,7 @@ class ListScreen extends StatelessWidget {
               title: Text('Panner'),
               subtitle: Text("with Matar"),
               onTap: () {
-                return Dialog(context);
+                return Dialog(context,"Pressed Panner Item");
               },
             ),
             ListTile(
@@ -32,13 +32,20 @@ class ListScreen extends StatelessWidget {
             ),
           ],
         ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            Dialog(context,"clicked fab");
+          },
+          child: Icon(Icons.add),
+          tooltip: 'Add One More Item',
+        ),
       ),
     );
   }
 }
 
-void Dialog(BuildContext context) {
-  var alertDialog = AlertDialog(title: Text("Pressed Panner Item"));
+void Dialog(BuildContext context, String text) {
+  var alertDialog = AlertDialog(title: Text(text));
   showDialog(
       context: context,
       builder: (BuildContext context) {
