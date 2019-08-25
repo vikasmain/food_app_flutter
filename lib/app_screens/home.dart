@@ -13,6 +13,9 @@ class Home extends StatelessWidget {
             child: Text("Hello from Container",
                 textDirection: TextDirection.ltr,
                 style: TextStyle(
-                    decoration: TextDecoration.none, fontSize: 40.0))));
+                    decoration: TextDecoration.none, fontSize: 40.0,
+                fontFamily: 'HindiSilliguri',
+                fontWeight: FontWeight.w700,
+                color: Colors.white))));
   }
 }
