@@ -54,13 +54,13 @@ class MainScreen extends StatelessWidget {
                     )),
                   ],
                 ),
-                FlightImageAsset()
+                ImageAsset()
               ],
             )));
   }
 }
 
-class FlightImageAsset extends StatelessWidget {
+class ImageAsset extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     AssetImage assetImage = AssetImage('images/download.jpeg');
