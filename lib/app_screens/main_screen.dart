@@ -14,7 +14,7 @@ class MainScreen extends StatelessWidget {
               children: <Widget>[
                 Center(
                     child: Container(
-                  margin: EdgeInsets.only(bottom: 40.0),
+                  margin: EdgeInsets.only(bottom: 20.0),
                   child: Text("Welcome to Food App",
                       textDirection: TextDirection.ltr,
                       style: TextStyle(
@@ -68,7 +68,8 @@ class MainScreen extends StatelessWidget {
                 ),
                 ImageAsset(),
                 AddButton(),
-                ListViewButton()
+                ListViewButton(),
+                InfiniteListViewButton()
               ],
             )));
   }
@@ -138,5 +139,53 @@ class ListViewButton extends StatelessWidget {
             );
           }),
     );
+  }
+}
+
+class InfiniteListViewButton extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 350.0,
+      height: 50.0,
+      margin: EdgeInsets.only(top: 10.0),
+      child: RaisedButton(
+          color: Colors.black,
+          elevation: 10.0,
+          child: Text("Press to See Infinite ListView",
+              style: TextStyle(color: Colors.white, fontSize: 20.0)),
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => InfiniteListView()),
+            );
+          }),
+    );
+  }
+}
+
+List<String> getListElements() {
+  var items = List<String>.generate(50, (counter) => "Food Item:- $counter");
+  return items;
+}
+
+class InfiniteListView extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    var listItems = getListElements();
+    return Center(
+        child: Scaffold(
+            appBar: AppBar(
+              title: Text("InfiniteListView"),
+            ),
+            body: ListView.builder(itemBuilder: (context, index) {
+              ListTile(
+                leading: Icon(Icons.fastfood),
+                title: Text(listItems[index]),
+                onTap: () {
+                  debugPrint('${listItems[index]} was tapped');
+                },
+              );
+            })));
   }
 }
