@@ -80,8 +80,12 @@ class AddButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      width: 250.0,
+      height: 50.0,
       child: RaisedButton(
           color: Colors.black,
+          elevation: 10.0,
+
           child: Text("Add Item",
               style: TextStyle(color: Colors.white, fontSize: 20.0)),
           onPressed: null),
