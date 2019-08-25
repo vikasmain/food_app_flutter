@@ -14,7 +14,7 @@ class MyFlutterAppComponent extends StatelessWidget {
             // we can omit new in new dart version
             color: Colors.lightBlueAccent,
             child: Center(
-                child: Text("Hello From Material Component",
+                child: Text(getTextForHomeScreen(),
                     textDirection: TextDirection.rtl,
                     style: TextStyle(
                         color: Colors.white,
@@ -22,5 +22,9 @@ class MyFlutterAppComponent extends StatelessWidget {
                         fontStyle: FontStyle.italic))),
           ),
         ));
+  }
+
+  String getTextForHomeScreen() {
+    return "Get Material Component From a method";
   }
 }
