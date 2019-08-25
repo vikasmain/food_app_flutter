@@ -85,10 +85,23 @@ class AddButton extends StatelessWidget {
       child: RaisedButton(
           color: Colors.black,
           elevation: 10.0,
-
           child: Text("Add Item",
               style: TextStyle(color: Colors.white, fontSize: 20.0)),
-          onPressed: null),
+          onPressed: () {
+            Dialog(context);
+          }),
     );
   }
+}
+
+void Dialog(BuildContext context) {
+  var alertDialog = AlertDialog(
+    title: Text("Item Added Successfully"),
+    content: Text("Enjoy your food"),
+  );
+  showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alertDialog;
+      });
 }
