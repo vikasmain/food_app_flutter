@@ -54,7 +54,8 @@ class MainScreen extends StatelessWidget {
                     )),
                   ],
                 ),
-                ImageAsset()
+                ImageAsset(),
+                AddButton()
               ],
             )));
   }
@@ -71,6 +72,19 @@ class ImageAsset extends StatelessWidget {
     );
     return Container(
       child: image,
+    );
+  }
+}
+
+class AddButton extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: RaisedButton(
+          color: Colors.black,
+          child: Text("Add Item",
+              style: TextStyle(color: Colors.white, fontSize: 20.0)),
+          onPressed: null),
     );
   }
 }
