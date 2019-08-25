@@ -1,15 +1,27 @@
 import 'package:flutter/material.dart';
+import 'list_view_screen.dart';
 
 class MainScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
         child: Container(
-            padding: EdgeInsets.only(left: 10.0, top: 40.0),
+            margin: EdgeInsets.only(top: 10.0),
+            padding: EdgeInsets.only(left: 20.0, right: 20.0, top: 30.0),
             alignment: Alignment.center,
             color: Colors.deepPurple,
             child: Column(
               children: <Widget>[
+                Center(
+                    child: Container(
+                  margin: EdgeInsets.only(bottom: 40.0),
+                  child: Text("Welcome to Food App",
+                      textDirection: TextDirection.ltr,
+                      style: TextStyle(
+                        fontSize: 20.0,
+                        color: Colors.white,
+                      )),
+                )),
                 Row(
                   children: <Widget>[
                     Expanded(
@@ -55,7 +67,8 @@ class MainScreen extends StatelessWidget {
                   ],
                 ),
                 ImageAsset(),
-                AddButton()
+                AddButton(),
+                ListViewButton()
               ],
             )));
   }
@@ -80,12 +93,12 @@ class AddButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 250.0,
+      width: 350.0,
       height: 50.0,
       child: RaisedButton(
           color: Colors.black,
           elevation: 10.0,
-          child: Text("Add Item",
+          child: Text("Press to See Dialog Item",
               style: TextStyle(color: Colors.white, fontSize: 20.0)),
           onPressed: () {
             Dialog(context);
@@ -104,4 +117,26 @@ void Dialog(BuildContext context) {
       builder: (BuildContext context) {
         return alertDialog;
       });
+}
+
+class ListViewButton extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 350.0,
+      height: 50.0,
+      margin: EdgeInsets.only(top: 10.0),
+      child: RaisedButton(
+          color: Colors.black,
+          elevation: 10.0,
+          child: Text("Press to See ListView",
+              style: TextStyle(color: Colors.white, fontSize: 20.0)),
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => ListScreen()),
+            );
+          }),
+    );
+  }
 }

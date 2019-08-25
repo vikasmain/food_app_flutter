@@ -5,9 +5,8 @@ class ListScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final title = 'Food items List';
 
-    return MaterialApp(
-      title: title,
-      home: Scaffold(
+    return Center(
+      child: Scaffold(
         appBar: AppBar(
           title: Text(title),
         ),
