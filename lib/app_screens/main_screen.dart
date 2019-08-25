@@ -67,9 +67,9 @@ class MainScreen extends StatelessWidget {
                   ],
                 ),
                 ImageAsset(),
-                AddButton(),
-                ListViewButton(),
-                InfiniteListViewButton()
+                AddButton("Add Item"),
+                AddButton("Press to See ListView"),
+                AddButton("Press to see Infinite ListView")
               ],
             )));
   }
@@ -90,24 +90,6 @@ class ImageAsset extends StatelessWidget {
   }
 }
 
-class AddButton extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: 350.0,
-      height: 50.0,
-      child: RaisedButton(
-          color: Colors.black,
-          elevation: 10.0,
-          child: Text("Press to See Dialog Item",
-              style: TextStyle(color: Colors.white, fontSize: 20.0)),
-          onPressed: () {
-            Dialog(context);
-          }),
-    );
-  }
-}
-
 void Dialog(BuildContext context) {
   var alertDialog = AlertDialog(
     title: Text("Item Added Successfully"),
@@ -120,44 +102,28 @@ void Dialog(BuildContext context) {
       });
 }
 
-class ListViewButton extends StatelessWidget {
+class AddButton extends StatelessWidget {
+  String buttonText;
+
+  AddButton(String text) {
+    buttonText = text;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 350.0,
-      height: 50.0,
-      margin: EdgeInsets.only(top: 10.0),
+      width: 300.0,
+      height: 42.0,
+      margin: EdgeInsets.only(top:8.0),
       child: RaisedButton(
           color: Colors.black,
           elevation: 10.0,
-          child: Text("Press to See ListView",
-              style: TextStyle(color: Colors.white, fontSize: 20.0)),
+          child: Text(buttonText,
+              style: TextStyle(color: Colors.white, fontSize: 16.0)),
           onPressed: () {
             Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => ListScreen()),
-            );
-          }),
-    );
-  }
-}
-
-class InfiniteListViewButton extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: 350.0,
-      height: 50.0,
-      margin: EdgeInsets.only(top: 10.0),
-      child: RaisedButton(
-          color: Colors.black,
-          elevation: 10.0,
-          child: Text("Press to See Infinite ListView",
-              style: TextStyle(color: Colors.white, fontSize: 20.0)),
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => InfiniteListView()),
             );
           }),
     );
