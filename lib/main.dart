@@ -14,14 +14,18 @@ class MyFlutterAppComponent extends StatelessWidget {
             // we can omit new in new dart version
             color: Colors.lightBlueAccent,
             child: Center(
-                child: Text(getTextForHomeScreen(),
-                    textDirection: TextDirection.rtl,
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 20.0,
-                        fontStyle: FontStyle.italic))),
+              child: Row(
+            children: <Widget>[
+
+              Expanded(child: Text("column1",textDirection: TextDirection.ltr,)),
+              Text("column2",textDirection: TextDirection.ltr,),
+              Expanded(child: Text("column2",textDirection: TextDirection.ltr,),
+              )
+            ],
+    )
           ),
-        ));
+        ))
+    );
   }
 
   String getTextForHomeScreen() {
