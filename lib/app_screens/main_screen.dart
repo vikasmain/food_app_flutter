@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'list_view_screen.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class MainScreen extends StatelessWidget {
   @override
@@ -114,17 +115,36 @@ class AddButton extends StatelessWidget {
     return Container(
       width: 300.0,
       height: 42.0,
-      margin: EdgeInsets.only(top:8.0),
+      margin: EdgeInsets.only(top: 8.0),
       child: RaisedButton(
           color: Colors.black,
           elevation: 10.0,
           child: Text(buttonText,
               style: TextStyle(color: Colors.white, fontSize: 16.0)),
           onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => ListScreen()),
-            );
+            if (buttonText == "Show Dialog Item") {
+              Dialog(context);
+            } else if (buttonText == "Press to See ListView") {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => ListScreen()),
+              );
+            } else if (buttonText == "Press to See Infinite ListView") {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => InfiniteListView()),
+              );
+            } else {
+              Fluttertoast.showToast(
+                  msg: "Error ",
+                  toastLength: Toast.LENGTH_SHORT,
+                  gravity: ToastGravity.CENTER,
+                  timeInSecForIos: 2,
+                  backgroundColor: Colors.red,
+                  textColor: Colors.white,
+                  fontSize: 16.0
+              );
+            }
           }),
     );
   }
