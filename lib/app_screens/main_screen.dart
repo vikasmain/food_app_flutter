@@ -1,177 +1,150 @@
 import 'package:flutter/material.dart';
-import 'list_view_screen.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import 'Constants.dart';
 
 class MainScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Center(
-        child: Container(
-            margin: EdgeInsets.only(top: 10.0),
-            padding: EdgeInsets.only(left: 20.0, right: 20.0, top: 30.0),
-            alignment: Alignment.center,
-            color: Colors.deepPurple,
-            child: Column(
-              children: <Widget>[
-                Center(
-                    child: Container(
-                  margin: EdgeInsets.only(bottom: 20.0),
-                  child: Text("Welcome to Food App",
-                      textDirection: TextDirection.ltr,
-                      style: TextStyle(
-                        fontSize: 20.0,
-                        color: Colors.white,
-                      )),
-                )),
-                Row(
-                  children: <Widget>[
-                    Expanded(
-                        child: Text(
-                      "Burger",
-                      textDirection: TextDirection.ltr,
-                      style: TextStyle(
-                          decoration: TextDecoration.none,
-                          fontSize: 35.0,
-                          color: Colors.white),
-                    )),
-                    Expanded(
-                        child: Text(
-                      "Without Onion",
-                      textDirection: TextDirection.ltr,
-                      style: TextStyle(
-                          decoration: TextDecoration.none,
-                          fontSize: 20.0,
-                          color: Colors.white),
-                    )),
-                  ],
-                ),
-                Row(
-                  children: <Widget>[
-                    Expanded(
-                        child: Text(
-                      "Pizza",
-                      textDirection: TextDirection.ltr,
-                      style: TextStyle(
-                          decoration: TextDecoration.none,
-                          fontSize: 35.0,
-                          color: Colors.white),
-                    )),
-                    Expanded(
-                        child: Text(
-                      "Without Cheese",
-                      textDirection: TextDirection.ltr,
-                      style: TextStyle(
-                          decoration: TextDecoration.none,
-                          fontSize: 20.0,
-                          color: Colors.white),
-                    )),
-                  ],
-                ),
-                ImageAsset(),
-                AddButton("Add Item"),
-                AddButton("Press to See ListView"),
-                AddButton("Press to see Infinite ListView")
-              ],
-            )));
+    Constants.context = context;
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        primarySwatch: Colors.teal,
+      ),
+      home: Scaffold(
+        appBar: AppBar(
+          title: Text('Food App'),
+          actions: <Widget>[
+            PopupMenuButton<String>(
+              onSelected: showMenuOptions,
+              itemBuilder: (BuildContext context) {
+                return Constants.choices.map((String choice) {
+                  return PopupMenuItem<String>(
+                    value: choice,
+                    child: Text(choice),
+                  );
+                }).toList();
+              },
+            )
+          ],
+        ),
+        body: ListViewLayout(),
+      ),
+    );
   }
 }
 
-class ImageAsset extends StatelessWidget {
+void showMenuOptions(String choice) {
+  if (choice == Constants.settings) {
+    print('Settings');
+  } else if (choice == Constants.checkout) {
+    print(choice);
+    Navigator.push(
+      Constants.context,
+      MaterialPageRoute(builder: (context) => CheckoutPage()),
+    );
+  }
+}
+
+class ListViewLayout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    AssetImage assetImage = AssetImage('images/download.jpeg');
-    Image image = Image(
-      image: assetImage,
-      width: 250.0,
-      height: 250.0,
-    );
-    return Container(
-      child: image,
+    return listView(context);
+  }
+}
+
+class CheckoutPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Checkout Page"),
+      ),
+      body: Center(
+        child: (getTextWidgets(Constants.items)),
+      ),
     );
   }
 }
 
-void Dialog(BuildContext context) {
-  var alertDialog = AlertDialog(
-    title: Text("Item Added Successfully"),
-    content: Text("Enjoy your food"),
+Widget getTextWidgets(List<String> strings) {
+  List<Widget> list = new List<Widget>();
+  for (var i = 0; i < strings.length; i++) {
+    list.add(new Text(strings[i]));
+  }
+  return new Row(children: list);
+}
+
+Widget listView(BuildContext context) {
+  final foodList = [
+    'Burger',
+    'Pizza',
+    'Pasta',
+    'Butter chicken',
+    'Macroni',
+    'Paneer',
+    'Sandwich',
+    'Maggi',
+    'Burger',
+    'Pizza',
+    'Icecream',
+    'Cold drinks',
+    'Sweet',
+    'Beverages',
+    'Pasta'
+  ];
+  final foodIcons = [
+    Icons.fastfood,
+    Icons.local_pizza,
+    Icons.restaurant,
+    Icons.restaurant_menu,
+    Icons.fastfood,
+    Icons.room_service,
+    Icons.restaurant,
+    Icons.restaurant_menu,
+    Icons.room_service,
+    Icons.local_pizza,
+    Icons.restaurant,
+    Icons.restaurant_menu,
+    Icons.fastfood,
+    Icons.local_pizza,
+    Icons.room_service,
+  ];
+
+  return ListView.builder(
+    itemCount: foodList.length,
+    itemBuilder: (context, index) {
+      return Card(
+          child: ListTile(
+              leading: Icon(foodIcons[index]),
+              title: Text(foodList[index]),
+              trailing: Row(mainAxisSize: MainAxisSize.min, children: <Widget>[
+                IconButton(
+                    icon: new Icon(Icons.add),
+                    color: Colors.green,
+                    onPressed: () {
+                      addString(foodList[index], Constants.items);
+                    }),
+                IconButton(
+                    icon: new Icon(Icons.remove),
+                    color: Colors.red,
+                    onPressed: () {
+                      getString(foodList[index], Constants.items);
+                    }),
+              ])));
+    },
   );
-  showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return alertDialog;
-      });
 }
 
-class AddButton extends StatelessWidget {
-  String buttonText;
-
-  AddButton(String text) {
-    buttonText = text;
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: 300.0,
-      height: 42.0,
-      margin: EdgeInsets.only(top: 8.0),
-      child: RaisedButton(
-          color: Colors.black,
-          elevation: 10.0,
-          child: Text(buttonText,
-              style: TextStyle(color: Colors.white, fontSize: 16.0)),
-          onPressed: () {
-            if (buttonText == "Show Dialog Item") {
-              Dialog(context);
-            } else if (buttonText == "Press to See ListView") {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => ListScreen()),
-              );
-            } else if (buttonText == "Press to See Infinite ListView") {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => InfiniteListView()),
-              );
-            } else {
-              Fluttertoast.showToast(
-                  msg: "This is Center Short Toast",
-                  toastLength: Toast.LENGTH_SHORT,
-                  gravity: ToastGravity.CENTER,
-                  timeInSecForIos: 1,
-                  backgroundColor: Colors.red,
-                  textColor: Colors.white,
-                  fontSize: 16.0
-              );
-            }
-          }),
-    );
-  }
+addString(String item, List<String> items) async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  items.add(item);
+  prefs.setStringList('item', items);
 }
 
-List<String> getListElements() {
-  var items = List<String>.generate(50, (counter) => "Food Item:- $counter");
-  return items;
-}
-
-class InfiniteListView extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    var listItems = getListElements();
-    return Center(
-        child: Scaffold(
-            appBar: AppBar(
-              title: Text("InfiniteListView"),
-            ),
-            body: ListView.builder(itemBuilder: (context, index) {
-              ListTile(
-                leading: Icon(Icons.fastfood),
-                title: Text(listItems[index]),
-                onTap: () {
-                  debugPrint('${listItems[index]} was tapped');
-                },
-              );
-            })));
-  }
+getString(String item, List<String> items) async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  items.remove(item);
+  prefs.setStringList('item', items);
 }
