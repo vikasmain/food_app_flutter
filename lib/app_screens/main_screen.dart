@@ -136,10 +136,10 @@ class AddButton extends StatelessWidget {
               );
             } else {
               Fluttertoast.showToast(
-                  msg: "Error ",
+                  msg: "This is Center Short Toast",
                   toastLength: Toast.LENGTH_SHORT,
                   gravity: ToastGravity.CENTER,
-                  timeInSecForIos: 2,
+                  timeInSecForIos: 1,
                   backgroundColor: Colors.red,
                   textColor: Colors.white,
                   fontSize: 16.0
